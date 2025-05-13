@@ -1,0 +1,10 @@
+/node_modules
+/test
+/build
+/dist
+/angular
+package-lock.json
+*.log
+*.md
+.env.*
+Dockerfile.*
