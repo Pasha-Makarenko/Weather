@@ -8,7 +8,6 @@ module.exports = tseslint.config(
   {
     files: ["**/*.ts"],
     plugins: {
-      // @ts-ignore
       "unused-imports": unusedImports
     },
     extends: [
