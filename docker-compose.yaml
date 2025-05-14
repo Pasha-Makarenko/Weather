@@ -1,6 +1,6 @@
 services:
   frontend:
-    container_name: iotdevices.frontend
+    container_name: weather.frontend
     build:
       context: frontend
       dockerfile: Dockerfile.${NODE_ENV}
@@ -15,7 +15,7 @@ services:
       - angular-net
 
   backend:
-    container_name: iotdevices.backend
+    container_name: weather.backend
     build:
       context: backend
       dockerfile: Dockerfile.${NODE_ENV}
@@ -27,42 +27,52 @@ services:
     ports:
       - ${API_PORT}:3000
     depends_on:
-      - postgres
+      - database
       - redis
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
+    networks:
+      - pg-network
 
-  postgres:
+  database:
+    container_name: weather.postgres
     image: postgres:16.4-alpine
-    container_name: iotdevices.postgres
     env_file:
       - .env.${NODE_ENV}
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      - pg-network
 
   pgadmin:
-    container_name: iotdevices.pgadmin
+    container_name: weather.pgadmin
     image: dpage/pgadmin4
     env_file:
       - .env.${NODE_ENV}
     ports:
       - ${PGADMIN_DEFAULT_PORT}:80
     depends_on:
-      - postgres
+      - database
+    networks:
+      - pg-network
 
   redis:
+    container_name: weather.redis
     image: redis:latest
-    container_name: iotdevices.redis
     env_file:
       - .env.${NODE_ENV}
     ports:
       - ${REDIS_PORT}:6379
     volumes:
       - ./data/redis:/data
+    networks:
+      - pg-network
 
 networks:
+  pg-network:
+    driver: bridge
   angular-net:
     driver: bridge
