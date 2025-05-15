@@ -7,13 +7,14 @@ module.exports = {
   async up(queryInterface, _Sequelize) {
     await queryInterface.createTable("subscriptions", {
       id: {
-        type: DataType.INTEGER,
-        defaultValue: DataType.INTEGER,
+        type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
         primaryKey: true
       },
       email: {
         type: DataType.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           isEmail: true
         }
@@ -31,12 +32,12 @@ module.exports = {
         defaultValue: false
       },
       confirmationToken: {
-        type: DataType.STRING,
+        type: DataType.STRING(64),
         allowNull: false,
         unique: true
       },
       unsubscribeToken: {
-        type: DataType.STRING,
+        type: DataType.STRING(64),
         allowNull: false,
         unique: true
       },
