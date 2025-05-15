@@ -31,11 +31,6 @@ body {
   display: flex;
   flex-direction: column;
 
-  .locked {
-    overflow: hidden;
-    touch-action: none;
-  }
-
   @media (max-width: consts.$mobile_px + px) {
     @include mixins.hidescroll();
   }

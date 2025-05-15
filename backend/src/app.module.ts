@@ -4,6 +4,7 @@ import { SequelizeModule } from "@nestjs/sequelize"
 import { getSequelizeConfig } from "./config/database.config"
 import { config } from "./config/config"
 import { SubscriptionsModule } from "./subscriptions/subscriptions.module"
+import { MailModule } from "./mail/mail.module"
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { SubscriptionsModule } from "./subscriptions/subscriptions.module"
       useFactory: getSequelizeConfig,
       inject: [ConfigService]
     }),
+    MailModule,
     SubscriptionsModule
   ]
 })

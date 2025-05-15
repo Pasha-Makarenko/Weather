@@ -7,8 +7,7 @@ import { Subscription } from "./subscription.model"
 @ApiTags("Subscriptions")
 @Controller("")
 export class SubscriptionsController {
-  constructor(private subscriptionsService: SubscriptionsService) {
-  }
+  constructor(private subscriptionsService: SubscriptionsService) {}
 
   @ApiOperation({ summary: "Subscribe" })
   @ApiResponse({ status: 201, type: Subscription })

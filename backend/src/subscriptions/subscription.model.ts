@@ -13,9 +13,16 @@ interface SubscriptionCreationAttributes extends CreateSubscriptionDto {
 }
 
 @Table({ tableName: "subscriptions" })
-export class Subscription extends Model<Subscription, SubscriptionCreationAttributes> {
+export class Subscription extends Model<
+  Subscription,
+  SubscriptionCreationAttributes
+> {
   @ApiProperty({ example: "1", description: "Unique identifier" })
-  @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, primaryKey: true })
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    primaryKey: true
+  })
   declare id: string
 
   @Index
