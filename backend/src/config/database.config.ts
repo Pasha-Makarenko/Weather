@@ -1,6 +1,6 @@
 import { SequelizeModuleOptions } from "@nestjs/sequelize"
 import { ConfigService } from "@nestjs/config"
-import { SubscriptionsModel } from "../subscriptions/models/subscriptions.model"
+import { Subscription } from "../subscriptions/subscription.model"
 
 export const getSequelizeConfig = (
   configService: ConfigService
@@ -13,5 +13,5 @@ export const getSequelizeConfig = (
   database: configService.get<string>("POSTGRES_DB"),
   autoLoadModels: true,
   synchronize: process.env.NODE_ENV === "development",
-  models: [SubscriptionsModel]
+  models: [Subscription]
 })

@@ -1,5 +1,3 @@
-import * as process from "node:process"
-
 require("dotenv").config()
 
 module.exports = {

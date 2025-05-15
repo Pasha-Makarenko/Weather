@@ -1,19 +1,26 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript"
+import { Column, DataType, Index, Model, Table } from "sequelize-typescript"
 import { ApiProperty } from "@nestjs/swagger"
+import { CreateSubscriptionDto } from "./dto/create-subscription.dto"
 
 export enum Frequency {
   DAILY = "daily",
   HOURLY = "hourly"
 }
 
-@Table({ tableName: "subscriptions" })
-export class SubscriptionsModel extends Model<SubscriptionsModel> {
-  @ApiProperty({ example: 1, description: "Unique identifier" })
-  @Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
-  declare id: number
+interface SubscriptionCreationAttributes extends CreateSubscriptionDto {
+  readonly confirmationToken: string
+  readonly unsubscribeToken: string
+}
 
+@Table({ tableName: "subscriptions" })
+export class Subscription extends Model<Subscription, SubscriptionCreationAttributes> {
+  @ApiProperty({ example: "1", description: "Unique identifier" })
+  @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, primaryKey: true })
+  declare id: string
+
+  @Index
   @ApiProperty({ example: "example@gmail.com", description: "User email" })
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false, unique: true })
   email: string
 
   @ApiProperty({ example: "London", description: "Weather in current city" })
@@ -35,10 +42,11 @@ export class SubscriptionsModel extends Model<SubscriptionsModel> {
   isConfirmed: boolean
 
   @ApiProperty({ example: "123", description: "Confirmation token" })
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING(64), allowNull: false, unique: true })
   confirmationToken: string
 
+  @Index
   @ApiProperty({ example: "123", description: "Unsubscribe token" })
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING(64), allowNull: false, unique: true })
   unsubscribeToken: string
 }

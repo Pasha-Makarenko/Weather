@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
 import { SequelizeModule } from "@nestjs/sequelize"
 import { getSequelizeConfig } from "./config/database.config"
 import { config } from "./config/config"
+import { SubscriptionsModule } from "./subscriptions/subscriptions.module"
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { config } from "./config/config"
       imports: [ConfigModule],
       useFactory: getSequelizeConfig,
       inject: [ConfigService]
-    })
+    }),
+    SubscriptionsModule
   ]
 })
 export class AppModule {}
