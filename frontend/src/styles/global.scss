@@ -5,20 +5,41 @@
 
 @import "./null";
 
-//:root {
-//}
-//
-//::-webkit-scrollbar {
-//}
-//
-//::-webkit-scrollbar-track {
-//}
-//
-//::-webkit-scrollbar-thumb {
-//
-//  &:hover {
-//  }
-//}
+:root {
+  --main-bg: #261E35;
+  --second-bg: #2F293E;
+  --select-bg: #372C44;
+  --block-bg: #3C354A;
+  --icons: #8D8598;
+  --light: #E2D8FD;
+  --main-text: #FFFFFF;
+  --disable-text: #868B93;
+  --select-text: #D8BCFF;
+  --green: #00C287;
+  --red: #E72D04;
+  --error: #f2545b;
+  --scroll-bar: #372C44;
+  --scroll-bar-hover: #4e3c61;
+  --shadow-overlay: 0px 8px 32px 0px #150d21, 0px 1px 2px 0px #140d21;
+}
+
+::-webkit-scrollbar {
+  width: mixins.rem(12);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--main-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-bar);
+  border-radius: mixins.rem(6);
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: var(--scroll-bar-hover);
+  }
+}
 
 main {
   z-index: mixins.z("main");

@@ -1,0 +1,25 @@
+<header class="header">
+  <div class="header__container">
+    <a class="header__logo" [routerLink]="['/']">
+      <span>Weather</span>
+    </a>
+    <nav class="header__nav nav-header">
+      <button
+        id="modal-target-header"
+        type="button"
+        class="nav-header__subscription"
+        (click)="this.modalAdapter.open('subscription')"
+      >Subscription
+      </button>
+      <app-modal
+        class="user-nav__modal modal-nav"
+        [modalId]="'subscription'"
+        [options]="{
+          closeOutside: true
+        }"
+      >
+
+      </app-modal>
+    </nav>
+  </div>
+</header>
