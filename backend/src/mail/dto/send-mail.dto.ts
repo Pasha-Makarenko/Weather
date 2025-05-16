@@ -1,8 +1,8 @@
 import { IsEmail, IsEnum, IsString } from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
 import { Type } from "class-transformer"
-import { ConfirmContextDto } from "./confirm-context.dto"
-import { WeatherContextDto } from "./weather-context.dto"
+import { ConfirmContextDto } from "../../subscriptions/dto/confirm-context.dto"
+import { WeatherContextDto } from "../../weather/dto/weather-context.dto"
 
 export enum MailTemplate {
   CONFIRM = "confirm",
