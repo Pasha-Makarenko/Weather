@@ -5,6 +5,10 @@ import { getSequelizeConfig } from "./config/database.config"
 import { config } from "./config/config"
 import { SubscriptionsModule } from "./subscriptions/subscriptions.module"
 import { MailModule } from "./mail/mail.module"
+import { WeatherModule } from "./weather/weather.module"
+import { CacheModule } from "@nestjs/cache-manager"
+import { getCacheConfig } from "./config/cache.config"
+import { ScheduleModule } from "@nestjs/schedule"
 
 @Module({
   imports: [
@@ -14,8 +18,16 @@ import { MailModule } from "./mail/mail.module"
       useFactory: getSequelizeConfig,
       inject: [ConfigService]
     }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      useFactory: getCacheConfig,
+      inject: [ConfigService]
+    }),
+    ScheduleModule.forRoot(),
     MailModule,
-    SubscriptionsModule
+    SubscriptionsModule,
+    WeatherModule
   ]
 })
 export class AppModule {}

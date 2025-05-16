@@ -91,4 +91,13 @@ export class SubscriptionsService {
 
     return subscription
   }
+
+  async getActive(where: Partial<Subscription>) {
+    return await this.subscriptionsRepository.findAll({
+      where: {
+        ...where,
+        isConfirmed: true
+      }
+    })
+  }
 }
