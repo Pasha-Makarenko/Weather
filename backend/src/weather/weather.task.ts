@@ -28,7 +28,7 @@ export class WeatherTask {
     await this.sendWeather(Frequency.DAILY)
   }
 
-  private async sendWeather(frequency: Frequency) {
+  async sendWeather(frequency: Frequency) {
     const subscriptions = await this.subscriptionsService.getActive({
       frequency
     })
