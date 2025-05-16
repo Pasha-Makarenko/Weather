@@ -28,11 +28,11 @@ export class Subscription extends Model<
   @Index
   @ApiProperty({ example: "example@gmail.com", description: "User email" })
   @Column({ type: DataType.STRING, allowNull: false, unique: true })
-  email: string
+  declare email: string
 
   @ApiProperty({ example: "London", description: "Weather in current city" })
   @Column({ type: DataType.STRING, allowNull: false })
-  city: string
+  declare city: string
 
   @ApiProperty({
     example: Frequency.DAILY,
@@ -42,18 +42,18 @@ export class Subscription extends Model<
     type: DataType.ENUM(...Object.values(Frequency)),
     defaultValue: Frequency.DAILY
   })
-  frequency: Frequency
+  declare frequency: Frequency
 
   @ApiProperty({ example: false, description: "Is subscription confirmed" })
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
-  isConfirmed: boolean
+  declare isConfirmed: boolean
 
   @ApiProperty({ example: "123", description: "Confirmation token" })
   @Column({ type: DataType.STRING(64), allowNull: false, unique: true })
-  confirmationToken: string
+  declare confirmationToken: string
 
   @Index
   @ApiProperty({ example: "123", description: "Unsubscribe token" })
   @Column({ type: DataType.STRING(64), allowNull: false, unique: true })
-  unsubscribeToken: string
+  declare unsubscribeToken: string
 }

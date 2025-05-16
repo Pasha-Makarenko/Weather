@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Injectable,
   InternalServerErrorException
 } from "@nestjs/common"
 import { Cron, CronExpression } from "@nestjs/schedule"
@@ -9,6 +10,7 @@ import { SubscriptionsService } from "../subscriptions/subscriptions.service"
 import { MailTemplate } from "../mail/dto/send-mail.dto"
 import { WeatherService } from "./weather.service"
 
+@Injectable()
 export class WeatherTask {
   constructor(
     private subscriptionsService: SubscriptionsService,
@@ -31,8 +33,8 @@ export class WeatherTask {
       frequency
     })
 
-    try {
-      for (const sub of subscriptions) {
+    for (const sub of subscriptions) {
+      try {
         const weather = await this.weatherService.weather({
           city: sub.city,
           days: "1"
@@ -51,9 +53,9 @@ export class WeatherTask {
             weather
           }
         })
+      } catch (error) {
+        throw new InternalServerErrorException(error.message)
       }
-    } catch (error) {
-      throw new InternalServerErrorException(error.message)
     }
   }
 }
