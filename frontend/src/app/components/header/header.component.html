@@ -1,0 +1,106 @@
+<header class="header">
+  <div class="header__container">
+    <div class="header__logo">
+      <fa-icon [icon]="icon" />
+      <span>Weather</span>
+    </div>
+    <nav class="header__nav nav-header">
+      <button
+        id="modal-target-{{ modalId }}"
+        type="button"
+        class="nav-header__subscription button"
+        (click)="this.modalAdapter.open(modalId)"
+      >Subscription
+      </button>
+      <app-modal
+        class="nav-header__modal subscriptions"
+        [modalId]="modalId"
+        [options]="{
+          closeOutside: true
+        }"
+      >
+        <form
+          class="subscriptions__form form"
+          [formGroup]="subscriptionsFormGroup"
+          (ngSubmit)="subscribe()"
+        >
+          <h2 class="form__label">Email</h2>
+          <div
+            class="form__input-container {{ invalid(subscriptionsFormGroup, 'email') ? 'form__input-container_error' : '' }}">
+            <input
+              type="email"
+              class="form__input"
+              formControlName="email"
+              required
+            >
+          </div>
+          @if (invalid(subscriptionsFormGroup, 'email')) {
+            <app-form-error [message]="message(subscriptionsErrors, subscriptionsFormGroup, 'email')" />
+          }
+
+          <h2 class="form__label">City</h2>
+          <div
+            class="form__input-container {{ invalid(subscriptionsFormGroup, 'city') ? 'form__input-container_error' : '' }}">
+            <app-search
+              [searchId]="searchId"
+              [searchControl]="this.subscriptionsFormGroup.controls.city"
+              [options]="{
+                delay: 300
+              }"
+            />
+          </div>
+          @if (invalid(subscriptionsFormGroup, 'city')) {
+            <app-form-error [message]="message(subscriptionsErrors, subscriptionsFormGroup, 'city')" />
+          }
+
+          <h2 class="form__label">Frequency</h2>
+          <div
+            class="form__input-container form__input-container_radio {{ invalid(subscriptionsFormGroup, 'frequency') ? 'form__input-container_error' : '' }}">
+            <div class="form__radio">
+              <input
+                id="radio-1"
+                type="radio"
+                class="form__input"
+                formControlName="frequency"
+                [value]="Frequency.DAILY"
+              >
+              <label for="radio-1">Daily</label>
+            </div>
+            <div class="form__radio">
+              <input
+                id="radio-2"
+                type="radio"
+                class="form__input"
+                formControlName="frequency"
+                [value]="Frequency.HOURLY"
+              >
+              <label for="radio-2">Hourly</label>
+            </div>
+          </div>
+          @if (invalid(subscriptionsFormGroup, 'frequency')) {
+            <app-form-error [message]="message(subscriptionsErrors, subscriptionsFormGroup, 'frequency')" />
+          }
+
+          @if (subscriptionsSubmitError()) {
+            <app-form-error [message]="subscriptionsSubmitError()!" />
+          }
+
+          <div class="form__buttons">
+            <button
+              type="submit"
+              class="button form__button_submit"
+              (click)="subscribe()"
+            >Subscribe
+            </button>
+            <button
+              type="button"
+              class="button form__button_cancel"
+              (click)="modalAdapter.close(modalId)"
+            >Cancel
+            </button>
+          </div>
+        </form>
+      </app-modal>
+    </nav>
+  </div>
+</header>

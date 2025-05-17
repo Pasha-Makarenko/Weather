@@ -1,0 +1,31 @@
+@if (searchControl()) {
+  <div class="search">
+    <input
+      id="modal-target-{{ modalId() }}}"
+      type="text"
+      [formControl]="searchControl()!"
+      (focusin)="focusIn()"
+      (focusout)="focusOut()"
+    >
+    <app-modal
+      [modalId]="modalId()"
+      [options]="{
+      closeOutside: true
+    }"
+    >
+      @if (data()) {
+        <ul class="search__list">
+          @for (item of data(); track item.id) {
+            <li class="search__item">
+              <button
+                type="button"
+                (click)="select(item.name)"
+              >{{ item.name }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </app-modal>
+  </div>
+}

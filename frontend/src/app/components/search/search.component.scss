@@ -1,0 +1,34 @@
+@use "../../../styles/mixins" as mixins;
+
+:host ::ng-deep .search {
+  position: relative;
+
+  .modal {
+    transform: translate(-50%, 0%) scale(0);;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    padding: mixins.rem(5) 0;
+
+    &_active {
+      transform: translate(-50%, 0%) scale(1);
+    }
+  }
+
+  &__list {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: mixins.rem(calc(29.5 * 3));
+  }
+
+  &__item {
+    padding: mixins.rem(5) mixins.rem(15);
+    transition: color 0.2s ease, transform 0.2s ease;
+    letter-spacing: normal;
+
+    &:hover {
+      transform: translateX(mixins.rem(10));
+      color: var(--select-text);
+    }
+  }
+}
