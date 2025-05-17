@@ -1,34 +1,18 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { WeatherService } from "./weather.service"
-import { ConfigService } from "@nestjs/config"
+import { ConfigModule, ConfigService } from "@nestjs/config"
 import { HttpService } from "@nestjs/axios"
 import { CACHE_MANAGER } from "@nestjs/cache-manager"
 import { Cache } from "cache-manager"
 import { of } from "rxjs"
 import { WeatherQueryDto } from "./dto/weather-query.dto"
-import { InternalServerErrorException } from "@nestjs/common"
-
-const apiKey = "11a793cb09b54fbb86d171818251305"
+import { BadRequestException } from "@nestjs/common"
 
 describe("WeatherService", () => {
   let service: WeatherService
   let httpService: HttpService
   let cacheManager: Cache
-
-  const mockConfigService = {
-    get: jest.fn((key: string) => {
-      switch (key) {
-        case "WEATHER_API_URL":
-          return "https://api.weatherapi.com"
-        case "WEATHER_API_KEY":
-          return apiKey
-        case "CACHE_TTL":
-          return 60000
-        default:
-          return null
-      }
-    })
-  }
+  let config: ConfigService
 
   const mockHttpService = {
     get: jest.fn()
@@ -41,9 +25,13 @@ describe("WeatherService", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forRoot({
+          envFilePath: ".env.test"
+        })
+      ],
       providers: [
         WeatherService,
-        { provide: ConfigService, useValue: mockConfigService },
         { provide: HttpService, useValue: mockHttpService },
         { provide: CACHE_MANAGER, useValue: mockCacheManager }
       ]
@@ -52,6 +40,7 @@ describe("WeatherService", () => {
     service = module.get<WeatherService>(WeatherService)
     httpService = module.get<HttpService>(HttpService)
     cacheManager = module.get(CACHE_MANAGER)
+    config = module.get<ConfigService>(ConfigService)
   })
 
   it("should be defined", () => {
@@ -82,10 +71,10 @@ describe("WeatherService", () => {
       const result = await service.weather(mockDto)
       expect(result).toEqual(mockWeatherData)
       expect(httpService.get).toHaveBeenCalledWith(
-        "https://api.weatherapi.com/v1/forecast.json",
+        config.get<string>("WEATHER_API_URL") + "/v1/forecast.json",
         {
           params: {
-            key: apiKey,
+            key: config.get<string>("WEATHER_API_KEY"),
             q: "London",
             days: "1",
             aqi: "no",
@@ -96,14 +85,7 @@ describe("WeatherService", () => {
       expect(cacheManager.set).toHaveBeenCalledWith(
         "weather_London_1",
         mockWeatherData,
-        60000
-      )
-    })
-
-    it("should throw InternalServerErrorException when config is missing", async () => {
-      mockConfigService.get.mockReturnValue(null)
-      await expect(service.weather(mockDto)).rejects.toThrow(
-        InternalServerErrorException
+        Number(config.get<number>("WEATHER_CACHE_TTL"))
       )
     })
 
@@ -114,7 +96,7 @@ describe("WeatherService", () => {
       })
 
       await expect(service.weather(mockDto)).rejects.toThrow(
-        InternalServerErrorException
+        BadRequestException
       )
     })
   })

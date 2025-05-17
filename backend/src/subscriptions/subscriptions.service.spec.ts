@@ -3,7 +3,7 @@ import { SubscriptionsService } from "./subscriptions.service"
 import { getModelToken } from "@nestjs/sequelize"
 import { Frequency, Subscription } from "./subscription.model"
 import { MailService } from "../mail/mail.service"
-import { ConfigService } from "@nestjs/config"
+import { ConfigModule } from "@nestjs/config"
 import { CreateSubscriptionDto } from "./dto/create-subscription.dto"
 import {
   ConflictException,
@@ -33,12 +33,13 @@ describe("SubscriptionsService", () => {
     sendMail: jest.fn()
   }
 
-  const mockConfigService = {
-    get: jest.fn().mockReturnValue("http://localhost:3000")
-  }
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forRoot({
+          envFilePath: ".env.test"
+        })
+      ],
       providers: [
         SubscriptionsService,
         {
@@ -49,8 +50,7 @@ describe("SubscriptionsService", () => {
             findAll: jest.fn()
           }
         },
-        { provide: MailService, useValue: mockMailService },
-        { provide: ConfigService, useValue: mockConfigService }
+        { provide: MailService, useValue: mockMailService }
       ]
     }).compile()
 
@@ -118,7 +118,10 @@ describe("SubscriptionsService", () => {
 
   describe("confirm", () => {
     it("should confirm subscription", async () => {
-      const confirmedSub = { ...mockSubscription, isConfirmed: true } as unknown as Subscription
+      const confirmedSub = {
+        ...mockSubscription,
+        isConfirmed: true
+      } as unknown as Subscription
       jest.spyOn(service, "confirm").mockResolvedValue(confirmedSub)
 
       const result = await service.confirm("token123")
