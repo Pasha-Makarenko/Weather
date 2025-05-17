@@ -10,7 +10,7 @@ export class SearchController {
   @ApiOperation({ summary: "Search" })
   @ApiResponse({ status: 200 })
   @Get()
-  async search(@Query("q") city: string) {
+  async search(@Query("city") city: string) {
     return await this.searchService.search(city)
   }
 }
