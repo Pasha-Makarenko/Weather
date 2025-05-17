@@ -1,7 +1,7 @@
 @use "../../../styles/mixins" as mixins;
 
 .header {
-  border-bottom: var(--light) solid mixins.rem(1);
+  border-bottom: var(--border) solid mixins.rem(1);
 
   &__container {
     @include mixins.adaptiveValue("padding-top", 20, 10);
@@ -17,6 +17,11 @@
     align-items: center;
     justify-content: space-between;
     gap: mixins.rem(10);
+    color: var(--select-text);
+
+    fa-icon {
+      @include mixins.adaptiveValue("font-size", 40, 30);
+    }
 
     span {
       font-weight: 700;
@@ -50,18 +55,6 @@
 
     &_active {
       transform: translate(0) scale(1);
-    }
-  }
-
-  &__avatar {
-    padding: mixins.rem(3);
-    border: var(--light) solid mixins.rem(1);
-    border-radius: 50%;
-
-    img {
-      height: mixins.rem(30);
-      width: mixins.rem(30);
-      user-select: none;
     }
   }
 }

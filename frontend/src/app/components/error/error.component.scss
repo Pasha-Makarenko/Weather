@@ -5,6 +5,6 @@
   @include mixins.adaptiveValue("margin-bottom", 10, 7);
   @include mixins.adaptiveValue("padding", 10, 7);
   border-radius: mixins.rem(15);
-  background-color: var(--select-bg);
+  background-color: var(--block-bg);
   color: var(--error);
 }

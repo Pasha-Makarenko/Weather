@@ -6,21 +6,18 @@
 @import "./null";
 
 :root {
-  --main-bg: #261E35;
-  --second-bg: #2F293E;
-  --select-bg: #372C44;
-  --block-bg: #3C354A;
-  --icons: #8D8598;
-  --light: #E2D8FD;
-  --main-text: #FFFFFF;
-  --disable-text: #868B93;
-  --select-text: #D8BCFF;
-  --green: #00C287;
-  --red: #E72D04;
+  --main-bg: #fff;
+  --second-bg: #c6e0ff;
+  --select-bg: #92c7ff;
+  --block-bg: #d1e6ff;
+  --border: #002049;
+  --main-text: #000;
+  --second-text: #1f4269;
+  --select-text: #043457;
   --error: #f2545b;
-  --scroll-bar: #372C44;
-  --scroll-bar-hover: #4e3c61;
-  --shadow-overlay: 0px 8px 32px 0px #150d21, 0px 1px 2px 0px #140d21;
+  --scroll-bar: #e7e7e7;
+  --scroll-bar-hover: #eeeeee;
+  --shadow-overlay: 0px 8px 32px 0px rgba(31, 46, 61, 0.53), 0px 1px 2px 0px rgba(25, 41, 56, 0.52);
 }
 
 ::-webkit-scrollbar {
@@ -61,4 +58,155 @@ body {
   @include mixins.container-r;
   @include mixins.adaptiveValue("padding-left", 100, 20);
   @include mixins.adaptiveValue("padding-right", 100, 20);
+}
+
+.button {
+  display: block;
+  width: min-content;
+  white-space: nowrap;
+  font-weight: 700;
+  @include mixins.adaptiveValue("padding-top", 15, 10);
+  @include mixins.adaptiveValue("padding-bottom", 15, 10);
+  @include mixins.adaptiveValue("padding-left", 20, 15);
+  @include mixins.adaptiveValue("padding-right", 20, 15);
+  background-color: var(--block-bg);
+  border: mixins.rem(1) solid var(--border);
+  border-radius: mixins.rem(15);
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: var(--select-bg);
+    color: var(--select-text);
+  }
+}
+
+.modal {
+  &__title {
+    font-weight: 700;
+    @include mixins.adaptiveValue("font-size", 30, 20);
+    @include mixins.adaptiveValue("margin-bottom", 30, 20);
+    text-align: center;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.form {
+  &__label {
+    display: block;
+    font-weight: 700;
+    @include mixins.adaptiveValue("font-size", 18, 14);
+    @include mixins.adaptiveValue("margin-bottom", 15, 10);
+    color: var(--second-text);
+  }
+
+  &__input-container {
+    position: relative;
+    width: 100%;
+    @include mixins.adaptiveValue("margin-bottom", 10, 7);
+
+    input {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: mixins.rem(10) mixins.rem(15);
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      border: var(--border) solid mixins.rem(1);
+      background-color: var(--block-bg);
+      border-radius: mixins.rem(15);
+      color: var(--main-text);
+
+      &:hover {
+        background-color: var(--select-bg);
+      }
+
+      &:focus {
+        border-color: inherit;
+        background-color: var(--select-bg);
+      }
+    }
+
+    &_radio {
+      display: flex;
+      flex-direction: column;
+      gap: mixins.rem(10);
+    }
+
+    &_error input {
+      border-color: var(--error);
+    }
+  }
+
+  &__radio {
+    display: flex;
+    gap: mixins.rem(10);
+    align-items: center;
+
+    label {
+      color: var(--select-text);
+    }
+
+    input {
+      appearance: none;
+      outline: none;
+      position: relative;
+      width: mixins.rem(20);
+      height: mixins.rem(20);
+      border: none;
+      padding: 0;
+      background-color: var(--border);
+      border-radius: 50%;
+      transition: all 0.2s ease;
+
+      &:before {
+        content: "";
+        position: absolute;
+        width: mixins.rem(18);
+        height: mixins.rem(18);
+        top: mixins.rem(1);
+        left: mixins.rem(1);
+        border-radius: 50%;
+        background-color: var(--second-bg);
+        transition: all 0.2s ease;
+      }
+
+      &:hover, &:focus {
+        background-color: var(--second-text);
+      }
+
+      &:checked {
+        &:before {
+          width: mixins.rem(6);
+          height: mixins.rem(6);
+          top: mixins.rem(7);
+          left: mixins.rem(7);
+        }
+      }
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    padding: mixins.rem(10) mixins.rem(15);
+    @include mixins.adaptiveValue("font-size", 18, 14);
+    @include mixins.adaptiveValue("margin-top", 25, 20);
+    @include mixins.adaptiveValue("margin-bottom", 10, 7);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background-color: var(--second-bg);
+    border: var(--light) solid mixins.rem(1);
+    border-radius: mixins.rem(15);
+
+    &:hover {
+      background-color: var(--select-bg);
+      color: var(--select-text);
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
 }

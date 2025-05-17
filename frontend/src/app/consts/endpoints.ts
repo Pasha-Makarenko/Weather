@@ -1,4 +1,6 @@
-export const BASE_API_URL = process.env["API_URL"] + "/api"
+import { environment } from "../../environments/environment"
+
+export const BASE_API_URL = environment.apiUrl + "/api"
 
 export const ENDPOINTS = {
   subscribe: `${BASE_API_URL}/subscribe`,
