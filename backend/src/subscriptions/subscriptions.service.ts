@@ -45,7 +45,7 @@ export class SubscriptionsService {
       throw new InternalServerErrorException("Subscription not created")
     }
 
-    const baseUrl = this.configService.get("API_URL")
+    const clientUrl = this.configService.get("CLIENT_URL")
 
     try {
       await this.mailService.sendMail({
@@ -53,7 +53,7 @@ export class SubscriptionsService {
         subject: "Confirmation",
         template: MailTemplate.CONFIRM,
         context: {
-          confirmUrl: baseUrl + "/api/confirm/" + confirmationToken
+          confirmUrl: clientUrl + "/confirm/" + confirmationToken
         }
       })
     } catch (error) {
