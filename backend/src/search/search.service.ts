@@ -4,22 +4,21 @@ import {
   Injectable,
   InternalServerErrorException
 } from "@nestjs/common"
-import { WeatherQueryDto } from "./dto/weather-query.dto"
 import { ConfigService } from "@nestjs/config"
 import { HttpService } from "@nestjs/axios"
-import { WeatherData } from "./weather.interface"
 import { CACHE_MANAGER } from "@nestjs/cache-manager"
 import { Cache } from "cache-manager"
+import { City } from "./search.interface"
 
 @Injectable()
-export class WeatherService {
+export class SearchService {
   constructor(
     private configService: ConfigService,
     private httpService: HttpService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) {}
 
-  async weather(dto: WeatherQueryDto) {
+  async search(city: string) {
     const url = this.configService.get<string>("WEATHER_API_URL")
     const key = this.configService.get<string>("WEATHER_API_KEY")
 
@@ -27,34 +26,31 @@ export class WeatherService {
       throw new InternalServerErrorException("Unable to get data")
     }
 
-    const cacheKey = `weather_${dto.city}_${dto.days}`
+    const cacheKey = `search_${city}`
 
     try {
-      const cachedData = await this.cacheManager.get<WeatherData>(cacheKey)
+      const cachedData = await this.cacheManager.get<City[]>(cacheKey)
       if (cachedData) {
         return cachedData
       }
 
       const response = await this.httpService
-        .get<WeatherData>(url + "/v1/forecast.json", {
+        .get<City[]>(url + "/v1/search.json", {
           params: {
             key,
-            q: dto.city,
-            days: dto.days,
-            aqi: "no",
-            alerts: "no"
+            q: city
           }
         })
         .toPromise()
 
-      const weatherData = response?.data
-      const ttl = Number(this.configService.get<number>("WEATHER_CACHE_TTL"))
+      const searchData = response?.data
+      const ttl = Number(this.configService.get<number>("SEARCH_CACHE_TTL"))
 
-      if (weatherData) {
-        await this.cacheManager.set(cacheKey, weatherData, ttl)
+      if (searchData) {
+        await this.cacheManager.set(cacheKey, searchData, ttl)
       }
 
-      return weatherData
+      return searchData
     } catch (error) {
       throw new BadRequestException(error.message)
     }

@@ -9,6 +9,7 @@ import { WeatherModule } from "./weather/weather.module"
 import { CacheModule } from "@nestjs/cache-manager"
 import { getCacheConfig } from "./config/cache.config"
 import { ScheduleModule } from "@nestjs/schedule"
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { ScheduleModule } from "@nestjs/schedule"
     ScheduleModule.forRoot(),
     MailModule,
     SubscriptionsModule,
-    WeatherModule
+    WeatherModule,
+    SearchModule
   ]
 })
 export class AppModule {}
