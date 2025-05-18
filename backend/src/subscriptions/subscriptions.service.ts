@@ -60,8 +60,6 @@ export class SubscriptionsService {
       await subscription.destroy()
       throw new InternalServerErrorException(error.message)
     }
-
-    return subscription
   }
 
   async confirm(confirmationToken: string) {
@@ -74,8 +72,6 @@ export class SubscriptionsService {
     }
 
     await subscription.update({ isConfirmed: true })
-
-    return subscription
   }
 
   async unsubscribe(unsubscribeToken: string) {
@@ -88,8 +84,6 @@ export class SubscriptionsService {
     }
 
     await subscription.destroy()
-
-    return subscription
   }
 
   async getActive(where: Partial<Subscription>) {
