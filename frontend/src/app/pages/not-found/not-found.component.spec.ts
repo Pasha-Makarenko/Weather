@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
-
 import { NotFoundComponent } from "./not-found.component"
+import { Router } from "@angular/router"
 
 describe("NotFoundComponent", () => {
   let component: NotFoundComponent
@@ -8,7 +8,8 @@ describe("NotFoundComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotFoundComponent]
+      imports: [NotFoundComponent],
+      providers: [{ provide: Router, useValue: { url: "/not-found" } }]
     }).compileComponents()
 
     fixture = TestBed.createComponent(NotFoundComponent)
@@ -18,5 +19,9 @@ describe("NotFoundComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy()
+  })
+
+  it("should display current URL", () => {
+    expect(component.router.url).toBe("/not-found")
   })
 })

@@ -211,3 +211,21 @@ body {
     justify-content: space-between;
   }
 }
+
+.loader {
+  width: fit-content;
+  font-weight: 700;
+  font-size: mixins.rem(20);
+  clip-path: inset(0 1.5ch -0.5ch 0);
+  animation: l4 1s steps(4) infinite;
+}
+
+.loader:before {
+  content: "Loading..."
+}
+
+@keyframes l4 {
+  to {
+    clip-path: inset(0 -0.5ch 0 0)
+  }
+}
