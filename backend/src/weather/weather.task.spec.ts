@@ -6,6 +6,7 @@ import { WeatherService } from "./weather.service"
 import { Frequency, Subscription } from "../subscriptions/subscription.model"
 import { InternalServerErrorException } from "@nestjs/common"
 import { WeatherData } from "./weather.interface"
+import { ConfigModule } from "@nestjs/config"
 
 describe("WeatherTask", () => {
   let task: WeatherTask
@@ -29,6 +30,11 @@ describe("WeatherTask", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forRoot({
+          envFilePath: ".env.test"
+        })
+      ],
       providers: [
         WeatherTask,
         {

@@ -4,6 +4,7 @@ import { routes } from "./app.routes"
 import { provideHttpClient } from "@angular/common/http"
 import { provideStore } from "@ngrx/store"
 import { modalReducer } from "./components/modal/state/modal.reducer"
+import { homeReducer } from "./pages/home/state/home.reducer"
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,7 +12,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideStore({
-      modals: modalReducer
+      modals: modalReducer,
+      home: homeReducer
     })
   ]
 }

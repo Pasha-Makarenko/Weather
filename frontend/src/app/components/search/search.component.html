@@ -3,9 +3,8 @@
     <input
       id="modal-target-{{ modalId() }}}"
       type="text"
+      autocomplete="off"
       [formControl]="searchControl()!"
-      (focusin)="focusIn()"
-      (focusout)="focusOut()"
     >
     <app-modal
       [modalId]="modalId()"
@@ -19,8 +18,8 @@
             <li class="search__item">
               <button
                 type="button"
-                (click)="select(item.name)"
-              >{{ item.name }}
+                (click)="select($index)"
+              >{{ item | city:"$n ($c)" }}
               </button>
             </li>
           }

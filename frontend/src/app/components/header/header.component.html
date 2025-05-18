@@ -45,7 +45,8 @@
               [searchId]="searchId"
               [searchControl]="this.subscriptionsFormGroup.controls.city"
               [options]="{
-                delay: 300
+                delay: 300,
+                save: false
               }"
             />
           </div>
@@ -89,7 +90,6 @@
             <button
               type="submit"
               class="button form__button_submit"
-              (click)="subscribe()"
             >Subscribe
             </button>
             <button

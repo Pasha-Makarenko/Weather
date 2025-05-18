@@ -16,7 +16,7 @@ export const getMailConfig = (configService: ConfigService): MailerOptions => ({
     from: configService.get<string>("SMTP_USER")
   },
   template: {
-    dir: __dirname + "/../mail/templates",
+    dir: __dirname + "/../../mail/templates",
     adapter: new PugAdapter(),
     options: {
       strict: true

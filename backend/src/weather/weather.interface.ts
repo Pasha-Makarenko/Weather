@@ -1,4 +1,4 @@
-export class WeatherData {
+export interface WeatherData {
   location: {
     name: string
     region: string

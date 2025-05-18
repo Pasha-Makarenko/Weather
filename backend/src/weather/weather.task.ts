@@ -9,10 +9,12 @@ import { MailService } from "../mail/mail.service"
 import { SubscriptionsService } from "../subscriptions/subscriptions.service"
 import { MailTemplate } from "../mail/dto/send-mail.dto"
 import { WeatherService } from "./weather.service"
+import { ConfigService } from "@nestjs/config"
 
 @Injectable()
 export class WeatherTask {
   constructor(
+    private configService: ConfigService,
     private subscriptionsService: SubscriptionsService,
     private mailService: MailService,
     private weatherService: WeatherService
@@ -44,12 +46,14 @@ export class WeatherTask {
           throw new BadRequestException("Unable to get data")
         }
 
+        const clientUrl = this.configService.get("CLIENT_URL")
+
         await this.mailService.sendMail({
           emails: [sub.email],
           subject: "Weather",
           template: MailTemplate.WEATHER,
           context: {
-            unsubscribeUrl: sub.unsubscribeToken,
+            unsubscribeUrl: clientUrl + "/unsubscribe/" + sub.unsubscribeToken,
             weather
           }
         })
