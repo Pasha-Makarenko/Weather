@@ -88,7 +88,6 @@
 .weather-hours {
   width: 100%;
   border-collapse: collapse;
-  border-top: mixins.rem(1) solid var(--light);
 
   &__wrapper {
     width: 100%;

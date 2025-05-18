@@ -3,27 +3,154 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Confirmation
+    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet")
+    title Weather
     style.
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 20px;
-        }
+      :root {
+        --main-bg: #fff;
+        --second-bg: #c6e0ff;
+        --select-bg: #92c7ff;
+        --block-bg: #d1e6ff;
+        --border: #002049;
+        --main-text: #000;
+        --second-text: #1f4269;
+        --select-text: #043457;
+      }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border: 1px solid #dddddd;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--main-text);
+        line-height: 1.6;
+      }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+      .weather__title {
+        font-weight: 700;
+        font-size: 40px;
+      }
+
+      .weather-summary {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .avg-summary__header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .avg-summary__text {
+        display: flex;
+        gap: 5px;
+      }
+
+      .avg-summary__temp {
+        font-size: 30px;
+      }
+
+      .type-summary {
+        line-height: 20px;
+        color: var(--select-text);
+        text-align: right;
+      }
+
+      .type-summary__title {
+        font-weight: 700;
+        color: var(--main-text);
+        font-size: 20px;
+      }
+
+      .weather-hours {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+
+      .weather-hours td, .weather-hours th {
+        padding: 10px;
+        text-align: center;
+      }
+
+      .weather-hours td:first-child, .weather-hours th:first-child {
+        text-align: left;
+        vertical-align: bottom;
+        font-weight: 400;
+      }
+
+      .weather-hours tr:nth-child(even) {
+        background-color: var(--second-bg);
+      }
+
+      .weather-hours__header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .weather-hours__wrapper {
+        width: 100%;
+        overflow-x: scroll;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        display: block;
+        white-space: nowrap;
+        font-weight: 700;
+        padding: 10px 15px;
+        background-color: var(--block-bg);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        text-decoration: none;
+        color: var(--main-text);
+        margin-top: 20px;
+      }
+
+      .button:hover {
+        background-color: var(--select-bg);
+        color: var(--select-text);
+      }
+
+      .footer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
   body
-    p
-      a(href=`${unsubscribeUrl}` target="_blank") Unsubscribe
+    h1.weather__title= weather.location.name + " (" + weather.location.country + ")"
+    .weather-summary
+      .type-summary
+        .type-summary__title Weather
+        .type-summary__day= new Date(weather.forecast.forecastday[0].date).toLocaleDateString('en-US', { weekday: 'long' })
+        .type-summary__type= weather.forecast.forecastday[0].day.condition.text
+      .avg-summary
+        .avg-summary__header
+          .avg-summary__text
+            .avg-summary__temp= weather.forecast.forecastday[0].day.avgtemp_c.toString() + "°C"
+
+    .weather-hours__wrapper
+      table.weather-hours
+        thead
+          tr
+            th Time
+            each hour in weather.forecast.forecastday[0].hour
+              th
+                .weather-hours__header
+                  .weather-hours__time= hour.time.split(' ')[1]
+        tbody
+          tr
+            td Temperature
+            each hour in weather.forecast.forecastday[0].hour
+              td= hour.temp_c.toString() + "°C"
+          tr
+            td Humidity
+            each hour in weather.forecast.forecastday[0].hour
+              td= hour.humidity.toString() + "%"
+          tr
+            td Wind
+            each hour in weather.forecast.forecastday[0].hour
+              td= hour.wind_kph.toString() + " k/h"
+
+    .footer
+      a(href=unsubscribeUrl class="button") Unsubscribe from weather updates
