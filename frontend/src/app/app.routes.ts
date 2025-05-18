@@ -15,9 +15,11 @@ export const routes: Routes = [
     redirectTo: redirectData => {
       const subscriptionsService = inject(SubscriptionsService)
 
-      subscriptionsService.confirm(redirectData.params["token"]).subscribe(res => {
-        console.log(res)
-      })
+      subscriptionsService
+        .confirm(redirectData.params["token"])
+        .subscribe(res => {
+          console.log(res)
+        })
 
       return ROUTES.home
     }
@@ -27,9 +29,11 @@ export const routes: Routes = [
     redirectTo: redirectData => {
       const subscriptionsService = inject(SubscriptionsService)
 
-      subscriptionsService.unsubscribe(redirectData.params["token"]).subscribe(res => {
-        console.log(res)
-      })
+      subscriptionsService
+        .unsubscribe(redirectData.params["token"])
+        .subscribe(res => {
+          console.log(res)
+        })
 
       return ROUTES.home
     }

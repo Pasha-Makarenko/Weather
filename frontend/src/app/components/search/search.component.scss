@@ -26,6 +26,10 @@
     transition: color 0.2s ease, transform 0.2s ease;
     letter-spacing: normal;
 
+    button {
+      text-align: left;
+    }
+
     &:hover {
       transform: translateX(mixins.rem(10));
       color: var(--select-text);

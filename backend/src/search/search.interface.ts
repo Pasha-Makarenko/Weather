@@ -5,5 +5,5 @@ export interface City {
   country: string
   lat: number
   lon: number
-  url: number
+  url: string
 }

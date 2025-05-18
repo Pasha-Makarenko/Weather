@@ -25,7 +25,8 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--main-bg);
+  //background: var(--main-bg);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {

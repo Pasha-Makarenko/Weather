@@ -33,7 +33,6 @@
 .nav-header {
   display: flex;
   align-items: center;
-  gap: mixins.rem(20);
 
   &__link {
     @include mixins.adaptiveValue("font-size", 20, 16);

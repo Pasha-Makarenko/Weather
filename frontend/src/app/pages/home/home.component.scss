@@ -1,23 +1,129 @@
 @use "../../../styles/mixins" as mixins;
 
-.get-started {
+.weather {
   &__container {
-    @include mixins.adaptiveValue("padding-top", 200, 150);
-    @include mixins.adaptiveValue("padding-bottom", 30, 20);
+    @include mixins.adaptiveValue("padding-top", 50, 20);
+    @include mixins.adaptiveValue("padding-bottom", 50, 20);
   }
+}
+
+:host ::ng-deep .heading-weather {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: mixins.rem(20);
+  @include mixins.adaptiveValue("margin-bottom", 40, 30);
 
   &__title {
     font-weight: 700;
     @include mixins.adaptiveValue("font-size", 40, 30);
-    @include mixins.adaptiveValue("margin-bottom", 20, 15);
+  }
+
+  &__search {
+    position: relative;
+
+    input {
+      padding: mixins.rem(10) mixins.rem(15);
+      border: mixins.rem(1) solid var(--border);
+      background-color: var(--second-bg);
+      border-radius: mixins.rem(15);
+    }
+  }
+
+  &__button {
+    position: absolute;
+    right: mixins.rem(15);
+    font-size: mixins.rem(16);
+    top: calc(50% - mixins.rem(8));
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.weather-summary {
+  display: flex;
+  justify-content: space-between;
+  @include mixins.adaptiveValue("margin-bottom", 20, 15);
+}
+
+.avg-summary {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: mixins.rem(10);
   }
 
   &__text {
-    font-weight: 500;
+    display: flex;
+    gap: mixins.rem(5);
+  }
+
+  &__temp {
+    @include mixins.adaptiveValue("font-size", 40, 30);
+  }
+
+  &__switch {
+    button.active {
+      font-weight: 700;
+    }
+  }
+}
+
+.type-summary {
+  line-height: mixins.rem(20);
+  color: var(--select-text);
+  text-align: right;
+
+  &__title {
+    font-weight: 700;
+    color: var(--main-text);
+    @include mixins.adaptiveValue("font-size", 24, 20);
+  }
+}
+
+.weather-hours {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: mixins.rem(1) solid var(--light);
+
+  &__wrapper {
+    width: 100%;
+    overflow-x: scroll;
     @include mixins.adaptiveValue("margin-bottom", 40, 30);
-    @include mixins.adaptiveValue("font-size", 16, 12);
-    color: var(--disable-text);
-    max-width: mixins.rem(400);
-    line-height: 1.5;
+  }
+
+  td:first-child, th:first-child {
+    text-align: left;
+    vertical-align: bottom;
+    font-weight: 400;
+  }
+
+  td, th {
+    &:nth-child(2n) {
+      background-color: var(--second-bg);
+    }
+
+    @include mixins.adaptiveValue("padding", 20, 10);
+    text-align: center;
+  }
+}
+
+.select-weather {
+  overflow-x: scroll;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-item {
+  transition: background-color 0.2s ease;
+  padding: mixins.rem(10);
+
+  &_active {
+    background-color: var(--second-bg);
+    border-radius: mixins.rem(15);
   }
 }

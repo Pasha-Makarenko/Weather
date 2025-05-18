@@ -1,5 +1,144 @@
 <main class="home">
   <section class="weather">
-    <div class="weather__container"></div>
+    <div class="weather__container">
+      <div class="weather__heading heading-weather">
+        <div class="heading-weather__title">
+          {{ weatherService.city ? (weatherService.city | city:"$n ($c)") : "Please, select city" }}
+        </div>
+        <div class="heading-weather__search">
+          <app-search
+            searchId="city"
+            [searchControl]="searchControl"
+            [options]="{
+              delay: 300,
+              save: true
+            }"
+            (selectOutput)="homeAdapter.weather()"
+          />
+          <button
+            type="button"
+            class="heading-weather__button"
+            (click)="homeAdapter.weather()"
+          >
+            <fa-icon [icon]="searchIcon" />
+          </button>
+        </div>
+      </div>
+
+      @if (data().isLoading || !data().result) {
+        <div class="loader"></div>
+      } @else if (data().error) {
+        <app-form-error [message]="data().error!" />
+      } @else {
+        @if (currentDay()) {
+          <div class="weather-summary">
+            <div class="weather-summary__average avg-summary">
+              <div class="avg-summary__header">
+                <img
+                  [src]="currentDay()!.condition.icon"
+                  [srcset]="currentDay()!.condition.icon"
+                  alt="day-icon"
+                  class="avg-summary__icon"
+                >
+                <div class="avg-summary__text">
+                  <div class="avg-summary__temp">
+                    {{ currentDay()![tempUnit() === TemperatureUnit.CELSIUS ? "avgtemp_c" : "avgtemp_f"] }}
+                  </div>
+                  <div class="avg-summary__switch">
+                    <button
+                      type="button"
+                      class="{{ tempUnit() === TemperatureUnit.CELSIUS ? 'active' : '' }}"
+                      (click)="tempUnit.set(TemperatureUnit.CELSIUS)"
+                    >°C
+                    </button>
+                    |
+                    <button
+                      type="button"
+                      class="{{ tempUnit() === TemperatureUnit.FAHRENHEIT ? 'active' : '' }}"
+                      (click)="tempUnit.set(TemperatureUnit.FAHRENHEIT)"
+                    >°F
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="weather-summary__type type-summary">
+              <div class="type-summary__title">Weather</div>
+              <div class="type-summary__day">{{ currentDate() | date:"EEEE" }}</div>
+              <div class="type-summary__type">{{ currentDay()!.condition.text }}</div>
+            </div>
+          </div>
+          <div class="weather-hours__wrapper">
+            <table class="weather-hours">
+              <thead>
+              <tr>
+                <th>Time</th>
+                @for (hour of hours(); track hour.time) {
+                  <th>
+                    <div class="weather-hours__header">
+                      <img
+                        [src]="hour.condition.icon"
+                        [srcset]="hour.condition.icon"
+                        alt="hour-icon"
+                        class="weather-hours__icon"
+                      >
+                      <div class="weather-hours__time">
+                        {{ hour.time.split(" ")[1] }}
+                      </div>
+                    </div>
+                  </th>
+                }
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Temperature</td>
+                @for (hour of hours(); track hour.time) {
+                  <td>{{ hour[tempUnit() === TemperatureUnit.CELSIUS ? "temp_c" : "temp_f"] | temperature:tempUnit() }}</td>
+                }
+              </tr>
+              <tr>
+                <td>Humidity</td>
+                @for (hour of hours(); track hour.time) {
+                  <td>{{ hour.humidity }}%</td>
+                }
+              </tr>
+              <tr>
+                <td>Wind</td>
+                @for (hour of hours(); track hour.time) {
+                  <td>{{ hour[speedUnit() === SpeedUnit.KILOMETRES ? "wind_kph" : "wind_mph"] | speed:speedUnit() }}</td>
+                }
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        }
+        <ul class="weather__select select-weather">
+          @for (day of data().result!.forecast!.forecastday!; track day.date) {
+            <li class="select-weather__item">
+              <button
+                type="button"
+                (click)="dayIndex.set($index)"
+              >
+                <div class="weather-item {{ day.date === currentDate() ? 'weather-item_active' : '' }}">
+                  <div class="weather-item__day">
+                    {{ day.date | date:"E" }}
+                  </div>
+                  <img
+                    [src]="day.day.condition.icon"
+                    [srcset]="day.day.condition.icon"
+                    alt="day-icon"
+                    class="weather-item__icon"
+                  >
+                  <div class="weather-temp">
+                    {{ day.day[tempUnit() === TemperatureUnit.CELSIUS ? "avgtemp_c" : "avgtemp_f"] | temperature:tempUnit() }}
+                  </div>
+                </div>
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
   </section>
 </main>
