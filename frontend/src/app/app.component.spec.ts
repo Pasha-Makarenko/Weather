@@ -1,22 +1,34 @@
-import { TestBed } from "@angular/core/testing"
+import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { AppComponent } from "./app.component"
+import { HeaderComponent } from "./components/header/header.component"
+import { provideMockStore } from "@ngrx/store/testing"
+import { ReactiveFormsModule } from "@angular/forms"
+import { HttpClientTestingModule } from "@angular/common/http/testing"
 
 describe("AppComponent", () => {
+  let fixture: ComponentFixture<AppComponent>
+  let component: AppComponent
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent]
+      imports: [
+        AppComponent,
+        HeaderComponent,
+        ReactiveFormsModule,
+        HttpClientTestingModule
+      ],
+      providers: [provideMockStore()]
     }).compileComponents()
+
+    fixture = TestBed.createComponent(AppComponent)
+    component = fixture.componentInstance
   })
 
   it("should create the app", () => {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.componentInstance
-    expect(app).toBeTruthy()
+    expect(component).toBeTruthy()
   })
 
-  it(`should have the 'CryptoPortfolioTracker' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.componentInstance
-    expect(app.title).toEqual("CryptoPortfolioTracker")
+  it(`should have as title 'Weather'`, () => {
+    expect(component.title).toEqual("Weather")
   })
 })
