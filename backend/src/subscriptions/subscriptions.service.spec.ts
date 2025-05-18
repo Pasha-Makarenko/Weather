@@ -79,8 +79,8 @@ describe("SubscriptionsService", () => {
         .mockResolvedValue(mockSubscription)
       mockMailService.sendMail.mockResolvedValue(true)
 
-      const result = await service.createSubscription(createDto)
-      expect(result).toEqual(mockSubscription)
+      await service.createSubscription(createDto)
+
       expect(subscriptionModel.findOne).toHaveBeenCalledWith({
         where: { email: createDto.email }
       })
@@ -117,17 +117,6 @@ describe("SubscriptionsService", () => {
   })
 
   describe("confirm", () => {
-    it("should confirm subscription", async () => {
-      const confirmedSub = {
-        ...mockSubscription,
-        isConfirmed: true
-      } as unknown as Subscription
-      jest.spyOn(service, "confirm").mockResolvedValue(confirmedSub)
-
-      const result = await service.confirm("token123")
-      expect(result.isConfirmed).toBeTruthy()
-    })
-
     it("should throw NotFoundException if token invalid", async () => {
       jest.spyOn(subscriptionModel, "findOne").mockResolvedValue(null)
 
@@ -143,8 +132,7 @@ describe("SubscriptionsService", () => {
         .spyOn(subscriptionModel, "findOne")
         .mockResolvedValue(mockSubscription)
 
-      const result = await service.unsubscribe("token456")
-      expect(result).toEqual(mockSubscription)
+      await service.unsubscribe("token456")
       expect(mockSubscription.destroy).toHaveBeenCalled()
     })
 

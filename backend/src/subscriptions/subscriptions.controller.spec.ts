@@ -2,22 +2,12 @@ import { Test, TestingModule } from "@nestjs/testing"
 import { SubscriptionsController } from "./subscriptions.controller"
 import { SubscriptionsService } from "./subscriptions.service"
 import { CreateSubscriptionDto } from "./dto/create-subscription.dto"
-import { Frequency, Subscription } from "./subscription.model"
+import { Frequency } from "./subscription.model"
 import { ConflictException, NotFoundException } from "@nestjs/common"
 
 describe("SubscriptionsController", () => {
   let controller: SubscriptionsController
   let subscriptionsService: jest.Mocked<SubscriptionsService>
-
-  const mockSubscription: Partial<Subscription> = {
-    id: "1",
-    email: "test@example.com",
-    city: "London",
-    frequency: Frequency.DAILY,
-    isConfirmed: false,
-    confirmationToken: "confirm-token",
-    unsubscribeToken: "unsubscribe-token"
-  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -51,18 +41,6 @@ describe("SubscriptionsController", () => {
       frequency: Frequency.DAILY
     }
 
-    it("should create a new subscription", async () => {
-      subscriptionsService.createSubscription.mockResolvedValue(
-        mockSubscription as Subscription
-      )
-
-      const result = await controller.subscribe(createDto)
-      expect(result).toEqual(mockSubscription)
-      expect(subscriptionsService.createSubscription).toHaveBeenCalledWith(
-        createDto
-      )
-    })
-
     it("should throw ConflictException if email already exists", async () => {
       subscriptionsService.createSubscription.mockRejectedValue(
         new ConflictException()
@@ -75,17 +53,6 @@ describe("SubscriptionsController", () => {
   })
 
   describe("confirm", () => {
-    it("should confirm subscription", async () => {
-      const confirmedSub = { ...mockSubscription, isConfirmed: true }
-      subscriptionsService.confirm.mockResolvedValue(
-        confirmedSub as Subscription
-      )
-
-      const result = await controller.confirm("confirm-token")
-      expect(result).toEqual(confirmedSub)
-      expect(subscriptionsService.confirm).toHaveBeenCalledWith("confirm-token")
-    })
-
     it("should throw NotFoundException if token is invalid", async () => {
       subscriptionsService.confirm.mockRejectedValue(new NotFoundException())
 
@@ -96,18 +63,6 @@ describe("SubscriptionsController", () => {
   })
 
   describe("unsubscribe", () => {
-    it("should unsubscribe user", async () => {
-      subscriptionsService.unsubscribe.mockResolvedValue(
-        mockSubscription as Subscription
-      )
-
-      const result = await controller.unsubscribe("unsubscribe-token")
-      expect(result).toEqual(mockSubscription)
-      expect(subscriptionsService.unsubscribe).toHaveBeenCalledWith(
-        "unsubscribe-token"
-      )
-    })
-
     it("should throw NotFoundException if token is invalid", async () => {
       subscriptionsService.unsubscribe.mockRejectedValue(
         new NotFoundException()

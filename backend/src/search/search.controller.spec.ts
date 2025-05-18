@@ -38,7 +38,7 @@ describe("SearchController", () => {
           country: "UK",
           lat: 51.52,
           lon: -0.11,
-          url: 123123
+          url: "london-city-of-london-greater-london-united-kingdom"
         }
       ]
 
