@@ -10,14 +10,12 @@ module.exports = {
     "^.+\\.(t|j)s$": [
       "ts-jest",
       {
-        tsconfig: "./tsconfig.test.json"
+        tsconfig: "./tsconfig.spec.json"
       }
     ]
   },
   collectCoverageFrom: ["**/*.(t|j)s"],
   coverageDirectory: "../coverage",
   testEnvironment: "node",
-  setupFiles: [
-    "<rootDir>/../jest.setup.ts"
-  ]
+  setupFiles: ["<rootDir>/../jest.setup.ts"]
 }
