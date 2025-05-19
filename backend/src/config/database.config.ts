@@ -12,6 +12,6 @@ export const getSequelizeConfig = (
   password: configService.get<string>("POSTGRES_PASSWORD"),
   database: configService.get<string>("POSTGRES_DB"),
   autoLoadModels: true,
-  synchronize: process.env.NODE_ENV === "development",
+  synchronize: process.env.NODE_ENV !== "production",
   models: [Subscription]
 })
