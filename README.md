@@ -24,14 +24,6 @@ cp .env.template .env
 # Edit the .env file with your configuration
 ```
 
-For frontend environments
-
-```bash
-cd frontend/src/environments
-cp environment.template.ts environment.ts
-# Edit the environment.ts file with your API endpoints
-```
-
 ### 2. Install Dependencies
 
 ```bash
