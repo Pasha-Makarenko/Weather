@@ -1,156 +1,87 @@
 doctype html
 html(lang="en")
   head
-    meta(charset="UTF-8")
+    meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet")
-    title Weather
-    style.
-      :root {
-        --main-bg: #fff;
-        --second-bg: #c6e0ff;
-        --select-bg: #92c7ff;
-        --block-bg: #d1e6ff;
-        --border: #002049;
-        --main-text: #000;
-        --second-text: #1f4269;
-        --select-text: #043457;
+    title Weather Update
+    style(type="text/css").
+      body, table, td, a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
       }
 
-      body {
-        font-family: "Inter", sans-serif;
-        color: var(--main-text);
-        line-height: 1.6;
+      table, td {
+        mso-table-lspace: 0;
+        mso-table-rspace: 0;
       }
 
-      .weather__title {
-        font-weight: 700;
-        font-size: 40px;
-      }
-
-      .weather-summary {
-        width: 100%;
-        margin-bottom: 20px;
-      }
-
-      .avg-summary__header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-
-      .avg-summary__text {
-        display: flex;
-        gap: 5px;
-      }
-
-      .avg-summary__temp {
-        font-size: 30px;
-      }
-
-      .type-summary {
-        line-height: 20px;
-        color: var(--select-text);
-        text-align: right;
-      }
-
-      .type-summary__title {
-        font-weight: 700;
-        color: var(--main-text);
-        font-size: 20px;
-      }
-
-      .weather-hours {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 30px;
-      }
-
-      .weather-hours td, .weather-hours th {
-        padding: 10px;
-        text-align: center;
-      }
-
-      .weather-hours td:first-child, .weather-hours th:first-child {
-        text-align: left;
-        vertical-align: bottom;
-        font-weight: 400;
-      }
-
-      .weather-hours tr:nth-child(even) {
-        background-color: var(--second-bg);
-      }
-
-      .weather-hours__header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .weather-hours__wrapper {
-        width: 100%;
-        overflow-x: scroll;
-        margin-bottom: 20px;
-      }
-
-      .button {
-        display: block;
-        white-space: nowrap;
-        font-weight: 700;
-        padding: 10px 15px;
-        background-color: var(--block-bg);
-        border: 1px solid var(--border);
-        border-radius: 15px;
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
         text-decoration: none;
-        color: var(--main-text);
-        margin-top: 20px;
       }
+  body(style="margin: 0; padding: 0; font-family: Arial, sans-serif; color: #000000; background-color: #ffffff;")
+    <!--[if (gte mso 9)|(IE)]>
+    <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+    <td>
+    <![endif]-->
+    table(width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto;")
+      tr
+        td(align="center" style="padding: 20px 0;")
+          table(width="100%" border="0" cellspacing="0" cellpadding="0")
+            tr
+              td(style="padding: 20px;")
+                h1(style="margin: 0; font-size: 24px; font-weight: 700; color: #000000;")= weather.location.name + " (" + weather.location.country + ")"
 
-      .button:hover {
-        background-color: var(--select-bg);
-        color: var(--select-text);
-      }
+      tr
+        td(align="center" style="padding: 0 20px 20px;")
+          table(width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #002049; border-radius: 15px;")
+            tr
+              td(style="padding: 20px;")
+                table(width="100%" border="0" cellspacing="0" cellpadding="0")
+                  tr
+                    td(style="padding-top: 10px;")
+                      table(width="100%" border="0" cellspacing="0" cellpadding="0")
+                        tr
+                          td(style="vertical-align: middle;")
+                            span(style="font-size: 30px; font-weight: 700;")= weather.forecast.forecastday[0].day.avgtemp_c.toString() + "°C"
+                    td(align="right" style="padding-bottom: 10px;")
+                      p(style="margin: 0; font-size: 16px; font-weight: 700; color: #000000;") Weather
+                      p(style="margin: 0; color: #043457;")= new Date(weather.forecast.forecastday[0].date).toLocaleDateString('en-US', { weekday: 'long' })
+                      p(style="margin: 0; color: #043457;")= weather.forecast.forecastday[0].day.condition.text
 
-      .footer {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-  body
-    h1.weather__title= weather.location.name + " (" + weather.location.country + ")"
-    .weather-summary
-      .type-summary
-        .type-summary__title Weather
-        .type-summary__day= new Date(weather.forecast.forecastday[0].date).toLocaleDateString('en-US', { weekday: 'long' })
-        .type-summary__type= weather.forecast.forecastday[0].day.condition.text
-      .avg-summary
-        .avg-summary__header
-          .avg-summary__text
-            .avg-summary__temp= weather.forecast.forecastday[0].day.avgtemp_c.toString() + "°C"
+      tr
+        td(align="center" style="padding: 0 20px 20px;")
+          div(style="width: 100%; overflow-x: auto;")
+            table(width="100%" border="0" cellspacing="0" cellpadding="0" style="min-width: 500px; border-collapse: collapse;")
+              tr
+                th(style="padding: 10px; text-align: left; font-weight: normal;") Time
+                each hour, index in weather.forecast.forecastday[0].hour
+                  th(style="padding: 10px; text-align: center; background-color: " + (index % 2 === 0 ? '#c6e0ff' : 'transparent') + ";")
+                    div(style="display: flex; flex-direction: column; align-items: center;")
+                      div= hour.time.split(' ')[1]
+              tr
+                td(style="padding: 10px;") Temperature
+                each hour, index in weather.forecast.forecastday[0].hour
+                  td(style="padding: 10px; text-align: center; background-color: " + (index % 2 === 0 ? '#c6e0ff' : 'transparent') + ";")= hour.temp_c.toString() + "°C"
+              tr
+                td(style="padding: 10px;") Humidity
+                each hour, index in weather.forecast.forecastday[0].hour
+                  td(style="padding: 10px; text-align: center; background-color: " + (index % 2 === 0 ? '#c6e0ff' : 'transparent') + ";")= hour.humidity.toString() + "%"
+              tr
+                td(style="padding: 10px;") Wind
+                each hour, index in weather.forecast.forecastday[0].hour
+                  td(style="padding: 10px; text-align: center; background-color: " + (index % 2 === 0 ? '#c6e0ff' : 'transparent') + ";")= hour.wind_kph.toString() + " km/h"
 
-    .weather-hours__wrapper
-      table.weather-hours
-        thead
-          tr
-            th Time
-            each hour in weather.forecast.forecastday[0].hour
-              th
-                .weather-hours__header
-                  .weather-hours__time= hour.time.split(' ')[1]
-        tbody
-          tr
-            td Temperature
-            each hour in weather.forecast.forecastday[0].hour
-              td= hour.temp_c.toString() + "°C"
-          tr
-            td Humidity
-            each hour in weather.forecast.forecastday[0].hour
-              td= hour.humidity.toString() + "%"
-          tr
-            td Wind
-            each hour in weather.forecast.forecastday[0].hour
-              td= hour.wind_kph.toString() + " k/h"
-
-    .footer
-      a(href=unsubscribeUrl class="button") Unsubscribe from weather updates
+      tr
+        td(align="center" style="padding: 20px;")
+          a(href=unsubscribeUrl style="display: inline-block; padding: 10px 15px; background-color: #d1e6ff; color: #000000; text-decoration: none; border: 1px solid #002049; border-radius: 15px; font-weight: 700;") Unsubscribe from weather updates
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->

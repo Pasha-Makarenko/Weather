@@ -39,11 +39,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body.locked {
-  overflow: hidden;
-  touch-action: none;
-}
-
 input,
 button,
 textarea {

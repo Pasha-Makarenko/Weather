@@ -9,7 +9,7 @@ import { WeatherModule } from "./weather/weather.module"
 import { CacheModule } from "@nestjs/cache-manager"
 import { getCacheConfig } from "./config/cache.config"
 import { ScheduleModule } from "@nestjs/schedule"
-import { SearchModule } from './search/search.module';
+import { SearchModule } from "./search/search.module"
 
 @Module({
   imports: [

@@ -20,7 +20,7 @@ export class WeatherTask {
     private weatherService: WeatherService
   ) {}
 
-  @Cron(CronExpression.EVERY_MINUTE)
+  @Cron(CronExpression.EVERY_HOUR)
   async sendWeatherHourly() {
     await this.sendWeather(Frequency.HOURLY)
   }

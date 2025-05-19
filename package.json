@@ -1,9 +1,9 @@
 {
   "name": "weather",
-  "version": "0.0.0",
+  "version": "1 .0.0",
   "scripts": {
-    "docker:dev": "docker-compose --env-file .env.development up -d",
-    "docker:prod": "docker-compose --env-file .env.production up -d"
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down"
   },
   "keywords": [
     "weather"

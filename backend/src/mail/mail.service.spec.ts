@@ -24,7 +24,7 @@ describe("MailService", () => {
       ],
       providers: [
         MailService,
-        { provide: MailerService, useValue: mockMailerService },
+        { provide: MailerService, useValue: mockMailerService }
       ]
     }).compile()
 
