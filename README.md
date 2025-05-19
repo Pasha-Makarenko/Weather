@@ -9,9 +9,34 @@ A web application for tracking weather in selected cities with email subscriptio
 - User-friendly interface
 - REST API documentation
 
+Here's the additional "Tech Stack" section to add to your README, maintaining the same style:
+
+## Tech Stack 💻
+
+### Backend
+- **Framework**: NestJS (Node.js)
+- **Database**: PostgreSQL with Sequelize ORM
+- **Caching**: Redis for data caching
+- **API Documentation**: Swagger/OpenAPI
+- **Testing**: Jest (unit tests)
+
+### Frontend
+- **Framework**: Angular
+- **State Management**: NgRx
+- **Confirmation**: Via email
+- **Testing**: Jest (unit tests)
+
+### Infrastructure
+- **Containerization**: Docker
+- **Email Service**: Nodemailer 
+
+Key Features Implementation:
+- Weather data caching with Redis TTL
+- Persistent user preferences via cookies
+
 ## Prerequisites 🛠️
 
-- Node.js (v14+)
+- Node.js (v22)
 - npm
 - Docker (for containerized deployment)
 
