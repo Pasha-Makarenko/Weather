@@ -21,7 +21,7 @@ For development
 
 ### 1. Environment Configuration
 
-Edit the `.env.dev` file with your configuration
+Edit the `.env.dev` file with your configuration and edit `frontend/src/environments/environment.ts` (only for development)
 
 ### 2. Install Dependencies
 
@@ -31,21 +31,21 @@ cd frontend && npm install
 cd ../backend && npm install
 ```
 
-## Running the Application �
-
-### Development Mode
+### Running
 
 ```bash
 npm run dev:start  # Starts both frontend and backend
 ```
 
-### Stopping the Application
+### Stopping
 
 ```bash
 npm run dev:stop
 ```
 
 For production
+
+Edit the `.env` file with your configuration
 
 ### Building
 
