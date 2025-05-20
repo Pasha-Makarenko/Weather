@@ -11,18 +11,17 @@ A web application for tracking weather in selected cities with email subscriptio
 
 ## Prerequisites 🛠️
 
-- Node.js (v14+)
+- Node.js (v22+)
 - npm
 - Docker (for containerized deployment)
 
 ## Installation & Setup ⚙️
 
+For development
+
 ### 1. Environment Configuration
 
-```bash
-cp .env.template .env
-# Edit the .env file with your configuration
-```
+Edit the `.env.dev` file with your configuration
 
 ### 2. Install Dependencies
 
@@ -37,13 +36,13 @@ cd ../backend && npm install
 ### Development Mode
 
 ```bash
-npm run start  # Starts both frontend and backend
+npm run dev:start  # Starts both frontend and backend
 ```
 
 ### Stopping the Application
 
 ```bash
-npm run stop
+npm run dev:stop
 ```
 
 ## Testing �
