@@ -10,6 +10,7 @@ import { CacheModule } from "@nestjs/cache-manager"
 import { getCacheConfig } from "./config/cache.config"
 import { ScheduleModule } from "@nestjs/schedule"
 import { SearchModule } from "./search/search.module"
+import { dynamicServeStatic } from "./config/serve-static.config"
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { SearchModule } from "./search/search.module"
       inject: [ConfigService]
     }),
     ScheduleModule.forRoot(),
+    ...dynamicServeStatic(),
     MailModule,
     SubscriptionsModule,
     WeatherModule,

@@ -45,6 +45,20 @@ npm run dev:start  # Starts both frontend and backend
 npm run dev:stop
 ```
 
+For production
+
+### Building
+
+```bash
+npm run install:all && npm run build:all
+```
+
+### Running
+
+```bash
+npm run start:backend
+```
+
 ## Testing �
 
 ### Backend Tests

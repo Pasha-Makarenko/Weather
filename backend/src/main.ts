@@ -2,10 +2,16 @@ import { NestFactory } from "@nestjs/core"
 import { AppModule } from "./app.module"
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger"
 import { ValidationPipe } from "@nestjs/common"
+import * as process from "node:process"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  app.enableCors()
+  app.enableCors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? process.env.API_URL
+        : process.env.CLIENT_URL
+  })
   app.setGlobalPrefix("api")
 
   const config = new DocumentBuilder()

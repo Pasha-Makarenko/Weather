@@ -46,14 +46,18 @@ export class WeatherTask {
           throw new BadRequestException("Unable to get data")
         }
 
-        const clientUrl = this.configService.get("CLIENT_URL")
+        const url = this.configService.get<string>(
+          this.configService.get<string>("NODE_ENV") === "production"
+            ? "API_URL"
+            : "CLIENT_URL"
+        )
 
         await this.mailService.sendMail({
           emails: [sub.email],
           subject: "Weather",
           template: MailTemplate.WEATHER,
           context: {
-            unsubscribeUrl: clientUrl + "/unsubscribe/" + sub.unsubscribeToken,
+            unsubscribeUrl: url + "/unsubscribe/" + sub.unsubscribeToken,
             weather
           }
         })
